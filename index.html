@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Прохор Мандрика — AI-видео, реклама и промо-ролики.">
+<meta property="og:title" content="Прохор Мандрика">
+<meta property="og:image" content="media/cosmos.jpg">
+<meta name="theme-color" content="#000000">
+<title>Прохор Мандрика</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;600;800&family=IBM+Plex+Mono&display=swap">
+<style>
+/* Layout: одна колонка как у Vilchinski. Наверху горизонтальная работа на всю ширину, ниже сетка вертикальных роликов 3/2 колонки. Имя и контакты закреплены. Всё в негативе, цвет проявляется при наведении. */
+:root {
+  --ink: #000;          /* фон */
+  --paper: #f4f4f2;     /* основной текст */
+  --dim: #8a8a86;       /* подписи */
+  --line: #262626;      /* тонкие границы */
+  --veil: rgba(0,0,0,.92);
+  --display: "Geologica", "Helvetica Neue", Arial, sans-serif;
+  --body: "Geologica", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --gutter: clamp(16px, 2.4vw, 32px);
+  --gap: clamp(12px, 2vw, 28px);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { background: var(--ink); color: var(--paper); }
+body {
+  margin: 0;
+  font: 400 14px/1.4 var(--body);
+  -webkit-font-smoothing: antialiased;
+  padding-inline: var(--gutter);
+  padding-block: calc(env(safe-area-inset-top, 0px) + clamp(76px, 9vw, 112px)) calc(env(safe-area-inset-bottom, 0px) + 120px);
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
+
+/* ——— шапка ——— */
+.top {
+  position: fixed; inset: 0 0 auto 0; z-index: 10;
+  padding: calc(env(safe-area-inset-top, 0px) + 18px) var(--gutter) 28px;
+  text-align: center;
+  background: linear-gradient(var(--ink) 55%, transparent);
+  pointer-events: none;
+}
+.top h1 {
+  margin: 0;
+  font: 800 clamp(24px, 4.4vw, 52px)/1 var(--display);
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  pointer-events: auto;
+}
+.top p {
+  margin: 8px 0 0;
+  font: 400 11px/1 var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* ——— работы ——— */
+main { max-width: 1240px; margin-inline: auto; display: grid; gap: clamp(40px, 6vw, 72px); }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(36px, 4vw, 56px) var(--gap); }
+@media (max-width: 720px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.work { display: grid; gap: 12px; min-width: 0; }
+.work.wide { width: 100%; max-width: min(100%, calc((100svh - 260px) * 16 / 9)); margin-inline: auto; }
+.frame {
+  position: relative; display: block; width: 100%; max-width: 100%;
+  overflow: hidden; border-radius: 6px; background: #111;
+  aspect-ratio: 9 / 16;
+}
+.work.wide .frame { aspect-ratio: 16 / 9; }
+.frame video, .frame img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: grayscale(1) invert(1) contrast(1.15);
+  transition: filter .6s ease, transform .9s cubic-bezier(.2,.7,.2,1);
+}
+body.color .frame video, body.color .frame img,
+.work.live .frame video, .work.live .frame img { filter: none; }
+@media (hover: hover) {
+  .frame:hover video, .frame:hover img { filter: none; transform: scale(1.025); }
+}
+.play {
+  position: absolute; left: 12px; bottom: 12px;
+  font: 400 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
+  padding: 7px 9px; border-radius: 3px;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  opacity: 0; transition: opacity .3s;
+}
+.frame:hover .play, .frame:focus-visible .play, .work.live .play { opacity: 1; }
+
+.cap { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; min-width: 0; }
+.cap div { min-width: 0; }
+.cap h2 {
+  margin: 0; font: 800 clamp(14px, 1.35vw, 18px)/1.15 var(--display);
+  text-transform: uppercase; letter-spacing: .01em; overflow-wrap: anywhere;
+}
+.cap p { margin: 4px 0 0; font: 600 11px/1.3 var(--body); text-transform: uppercase; letter-spacing: .06em; color: var(--dim); }
+.cap .meta { flex: none; font: 400 11px/1 var(--mono); color: var(--dim); font-variant-numeric: tabular-nums; }
+@media (max-width: 480px) { .cap { flex-direction: column; gap: 6px; } }
+
+/* ——— подвал ——— */
+.bottom {
+  position: fixed; inset: auto 0 0 0; z-index: 10;
+  padding: 36px var(--gutter) calc(env(safe-area-inset-bottom, 0px) + 18px);
+  background: linear-gradient(transparent, var(--ink) 50%);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px;
+  font: 600 13px/1 var(--body); text-transform: uppercase; letter-spacing: .04em;
+}
+.bottom a, .bottom button.mail { color: var(--dim); transition: color .2s; }
+.bottom a:hover, .bottom button.mail:hover { color: var(--paper); }
+.switch { display: inline-flex; align-items: center; gap: 10px; color: var(--dim); }
+.switch .track {
+  width: 38px; height: 22px; border-radius: 11px; background: var(--line);
+  position: relative; transition: background .25s;
+}
+.switch .track::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--paper); transition: transform .25s;
+}
+.switch[aria-pressed="true"] .track { background: var(--paper); }
+.switch[aria-pressed="true"] .track::after { transform: translateX(16px); background: var(--ink); }
+.switch .lbl { font: 400 11px/1 var(--mono); letter-spacing: .1em; }
+.links { display: flex; flex-wrap: wrap; gap: 12px clamp(20px, 5vw, 64px); }
+
+/* ——— плеер ——— */
+.lb {
+  position: fixed; inset: 0; z-index: 50; background: var(--veil);
+  display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
+  padding: calc(env(safe-area-inset-top, 0px) + 14px) var(--gutter) calc(env(safe-area-inset-bottom, 0px) + 14px);
+  gap: 14px;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+.lb-head, .lb-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.lb-head h3 { margin: 0; font: 800 clamp(16px, 2vw, 22px)/1.1 var(--display); text-transform: uppercase; }
+.lb-head p { margin: 4px 0 0; font: 600 11px/1.2 var(--body); text-transform: uppercase; letter-spacing: .06em; color: var(--dim); }
+.lb-stage { min-height: 0; display: grid; place-items: center; overflow: hidden; }
+.lb video { max-width: 100%; max-height: calc(100svh - 170px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); border-radius: 6px; background: #000; display: block; }
+.lb button { font: 400 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--dim); padding: 10px 4px; }
+.lb button:hover { color: var(--paper); }
+.lb .count { font: 400 12px/1 var(--mono); color: var(--dim); font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  .frame video, .frame img, .switch .track, .switch .track::after { transition: none; }
+  .frame:hover video, .frame:hover img { transform: none; }
+}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <h1>Прохор Мандрика</h1>
+  <p>AI-видео · реклама · промо</p>
+</header>
+
+<main>
+  <article class="work wide" data-id="cosmos">
+    <a class="frame" href="#cosmos" aria-label="Смотреть Asahi Super Dry">
+      <video src="media/cosmos-loop.mp4" poster="media/cosmos.jpg" muted loop playsinline preload="metadata"></video>
+      <span class="play">▶ Смотреть со звуком</span>
+    </a>
+    <div class="cap">
+      <div><h2>Asahi Super Dry</h2><p>Cosmos · концепт-спот</p></div>
+      <span class="meta">16:9 · 0:16</span>
+    </div>
+  </article>
+
+  <section class="grid" aria-label="Работы">
+    <article class="work" data-id="neymand">
+      <a class="frame" href="#neymand" aria-label="Смотреть Neymand Studio">
+        <video src="media/neymand-loop.mp4" poster="media/neymand.jpg" muted loop playsinline preload="metadata"></video>
+        <span class="play">▶ Смотреть</span>
+      </a>
+      <div class="cap"><div><h2>Neymand Studio</h2><p>Студия интерьеров · имиджевый ролик</p></div><span class="meta">9:16 · 0:24</span></div>
+    </article>
+
+    <article class="work" data-id="seedance">
+      <a class="frame" href="#seedance" aria-label="Смотреть Maison Rouge">
+        <video src="media/seedance-loop.mp4" poster="media/seedance.jpg" muted loop playsinline preload="metadata"></video>
+        <span class="play">▶ Смотреть</span>
+      </a>
+      <div class="cap"><div><h2>Maison Rouge</h2><p>Ресторан · промо</p></div><span class="meta">9:16 · 0:30</span></div>
+    </article>
+
+    <article class="work" data-id="padelgrad">
+      <a class="frame" href="#padelgrad" aria-label="Смотреть Padelgrad">
+        <video src="media/padelgrad-loop.mp4" poster="media/padelgrad.jpg" muted loop playsinline preload="metadata"></video>
+        <span class="play">▶ Смотреть</span>
+      </a>
+      <div class="cap"><div><h2>Padelgrad</h2><p>Падел-клуб · промо</p></div><span class="meta">9:16 · 0:22</span></div>
+    </article>
+
+    <article class="work" data-id="babuli">
+      <a class="frame" href="#babuli" aria-label="Смотреть Fast Food Mob">
+        <video src="media/babuli-loop.mp4" poster="media/babuli.jpg" muted loop playsinline preload="metadata"></video>
+        <span class="play">▶ Смотреть</span>
+      </a>
+      <div class="cap"><div><h2>Fast Food Mob</h2><p>Бабули · авторский ролик</p></div><span class="meta">9:16 · 0:21</span></div>
+    </article>
+
+    <article class="work" data-id="dom">
+      <a class="frame" href="#dom" aria-label="Смотреть ролик жилого комплекса">
+        <video src="media/dom-loop.mp4" poster="media/dom.jpg" muted loop playsinline preload="metadata"></video>
+        <span class="play">▶ Смотреть</span>
+      </a>
+      <div class="cap"><div><h2>Жилой комплекс</h2><p>Девелопер · архитектурный ролик</p></div><span class="meta">9:16 · 0:08</span></div>
+    </article>
+
+    <article class="work" data-id="ugc">
+      <a class="frame" href="#ugc" aria-label="Смотреть UGC">
+        <video src="media/ugc-loop.mp4" poster="media/ugc.jpg" muted loop playsinline preload="metadata"></video>
+        <span class="play">▶ Смотреть</span>
+      </a>
+      <div class="cap"><div><h2>UGC</h2><p>AI-блогер · бьюти</p></div><span class="meta">9:16 · 0:12</span></div>
+    </article>
+  </section>
+</main>
+
+<footer class="bottom">
+  <button class="switch" id="neg" type="button" aria-pressed="false" title="Показать всё в цвете">
+    <span class="track" aria-hidden="true"></span><span class="lbl">Цвет</span>
+  </button>
+  <nav class="links" aria-label="Контакты">
+    <a href="https://t.me/" target="_blank" rel="noopener" data-contact="telegram">Telegram</a>
+    <a href="https://instagram.com/" target="_blank" rel="noopener" data-contact="instagram">Instagram</a>
+    <button class="mail" id="mail" type="button" data-mail="proxorahah@gmail.com">Почта</button>
+  </nav>
+</footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lb-title">
+  <div class="lb-head">
+    <div><h3 id="lb-title"></h3><p id="lb-sub"></p></div>
+    <button type="button" id="lb-close">Закрыть ✕</button>
+  </div>
+  <div class="lb-stage"><video id="lb-video" controls playsinline preload="none"></video></div>
+  <div class="lb-foot">
+    <button type="button" id="lb-prev">← Назад</button>
+    <span class="count" id="lb-count"></span>
+    <button type="button" id="lb-next">Дальше →</button>
+  </div>
+</div>
+
+<script>
+(() => {
+  const works = [...document.querySelectorAll('.work')];
+  const vids = works.map(w => w.querySelector('.frame video'));
+  const touch = matchMedia('(hover: none)').matches;
+
+  // превью играют только в зоне видимости
+  const playIO = new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target;
+    if (e.isIntersecting) { const p = v.play(); if (p) p.catch(() => {}); } else v.pause();
+  }), { rootMargin: '200px 0px' });
+  vids.forEach(v => playIO.observe(v));
+
+  // на телефоне в цвет проявляется ролик в центре экрана
+  if (touch) {
+    const liveIO = new IntersectionObserver(es => es.forEach(e =>
+      e.target.closest('.work').classList.toggle('live', e.isIntersecting)
+    ), { rootMargin: '-38% 0px -38% 0px' });
+    vids.forEach(v => liveIO.observe(v));
+  }
+
+  // переключатель цвета
+  const neg = document.getElementById('neg');
+  const setColor = on => { document.body.classList.toggle('color', on); neg.setAttribute('aria-pressed', on); };
+  try { setColor(localStorage.getItem('pm-color') === '1'); } catch (e) {}
+  neg.addEventListener('click', () => {
+    const on = neg.getAttribute('aria-pressed') !== 'true';
+    setColor(on);
+    try { localStorage.setItem('pm-color', on ? '1' : '0'); } catch (e) {}
+  });
+
+  // почта: копируется в буфер, адрес показывается текстом
+  const mail = document.getElementById('mail');
+  mail.addEventListener('click', () => {
+    const addr = mail.dataset.mail;
+    const done = t => { mail.textContent = t; setTimeout(() => mail.textContent = 'Почта', 2200); };
+    if (navigator.clipboard) navigator.clipboard.writeText(addr).then(() => done('Скопировано: ' + addr), () => done(addr));
+    else done(addr);
+  });
+
+  // плеер
+  const lb = document.getElementById('lb'), lv = document.getElementById('lb-video');
+  const t = document.getElementById('lb-title'), s = document.getElementById('lb-sub'), c = document.getElementById('lb-count');
+  let cur = -1, lastFocus = null;
+  const open = i => {
+    cur = (i + works.length) % works.length;
+    const w = works[cur];
+    t.textContent = w.querySelector('h2').textContent;
+    s.textContent = w.querySelector('.cap p').textContent + ' · ' + w.querySelector('.meta').textContent;
+    c.textContent = (cur + 1) + ' / ' + works.length;
+    lv.src = 'media/' + w.dataset.id + '.mp4';
+    lv.poster = 'media/' + w.dataset.id + '.jpg';
+    if (lb.hidden) { lastFocus = document.activeElement; lb.hidden = false; document.body.style.overflow = 'hidden'; vids.forEach(v => v.pause()); }
+    lv.muted = false;
+    const p = lv.play(); if (p) p.catch(() => { lv.muted = true; lv.play().catch(() => {}); });
+    document.getElementById('lb-close').focus();
+    history.replaceState(null, '', '#' + w.dataset.id);
+  };
+  const close = () => {
+    lv.pause(); lv.removeAttribute('src'); lv.load();
+    lb.hidden = true; document.body.style.overflow = '';
+    history.replaceState(null, '', location.pathname + location.search);
+    vids.forEach(v => { const r = v.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) v.play().catch(() => {}); });
+    if (lastFocus) lastFocus.focus();
+  };
+  works.forEach((w, i) => w.querySelector('.frame').addEventListener('click', e => { e.preventDefault(); open(i); }));
+  document.getElementById('lb-close').addEventListener('click', close);
+  document.getElementById('lb-prev').addEventListener('click', () => open(cur - 1));
+  document.getElementById('lb-next').addEventListener('click', () => open(cur + 1));
+  lb.addEventListener('click', e => { if (e.target === lb || e.target.classList.contains('lb-stage')) close(); });
+  addEventListener('keydown', e => {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') open(cur + 1);
+    if (e.key === 'ArrowLeft') open(cur - 1);
+  });
+  // свайп между работами
+  let x0 = null;
+  lb.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 60) open(cur + (dx < 0 ? 1 : -1));
+  });
+  // прямая ссылка на работу: сайт.ru/#padelgrad
+  const h = location.hash.slice(1);
+  const k = works.findIndex(w => w.dataset.id === h);
+  if (k >= 0) open(k);
+})();
+</script>
+
+</body>
+</html>
