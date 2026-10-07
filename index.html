@@ -77,15 +77,16 @@ main { max-width: 1240px; margin-inline: auto; display: grid; gap: clamp(40px, 6
   aspect-ratio: 9 / 16;
 }
 .work.wide .frame { aspect-ratio: 16 / 9; }
-.frame video, .frame img {
+.frame video {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
-  filter: grayscale(1) invert(1) contrast(1.15);
-  transition: filter .6s ease, transform .9s cubic-bezier(.2,.7,.2,1);
+  transition: transform .9s cubic-bezier(.2,.7,.2,1);
 }
-body.color .frame video, body.color .frame img,
-.work.live .frame video, .work.live .frame img { filter: none; }
+/* негатив — отдельные файлы: CSS-фильтры на видео в Safari на iPhone не работают */
+.frame .v-col { opacity: 0; transition: opacity .5s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+body.color .frame .v-col, .work.live .frame .v-col { opacity: 1; }
 @media (hover: hover) {
-  .frame:hover video, .frame:hover img { filter: none; transform: scale(1.025); }
+  .frame:hover .v-col { opacity: 1; }
+  .frame:hover video { transform: scale(1.025); }
 }
 .play {
   position: absolute; left: 12px; bottom: 12px;
@@ -148,8 +149,8 @@ body.color .frame video, body.color .frame img,
 .lb .count { font: 400 12px/1 var(--mono); color: var(--dim); font-variant-numeric: tabular-nums; }
 
 @media (prefers-reduced-motion: reduce) {
-  .frame video, .frame img, .switch .track, .switch .track::after { transition: none; }
-  .frame:hover video, .frame:hover img { transform: none; }
+  .frame video, .switch .track, .switch .track::after { transition: none; }
+  .frame:hover video { transform: none; }
 }
 </style>
 </head>
@@ -164,7 +165,8 @@ body.color .frame video, body.color .frame img,
 <main>
   <article class="work wide" data-id="cosmos">
     <a class="frame" href="#cosmos" aria-label="Смотреть Asahi Super Dry">
-      <video src="media/cosmos-loop.mp4" poster="media/cosmos.jpg" muted loop playsinline preload="metadata"></video>
+      <video class="v-neg" src="media/cosmos-loop-neg.mp4" poster="media/cosmos-neg.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-col" src="media/cosmos-loop.mp4" poster="media/cosmos.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video>
       <span class="play">▶ Смотреть со звуком</span>
     </a>
     <div class="cap">
@@ -176,7 +178,8 @@ body.color .frame video, body.color .frame img,
   <section class="grid" aria-label="Работы">
     <article class="work" data-id="neymand">
       <a class="frame" href="#neymand" aria-label="Смотреть Neymand Studio">
-        <video src="media/neymand-loop.mp4" poster="media/neymand.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-neg" src="media/neymand-loop-neg.mp4" poster="media/neymand-neg.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-col" src="media/neymand-loop.mp4" poster="media/neymand.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video>
         <span class="play">▶ Смотреть</span>
       </a>
       <div class="cap"><div><h2>Neymand Studio</h2><p>Студия интерьеров · имиджевый ролик</p></div><span class="meta">9:16 · 0:24</span></div>
@@ -184,7 +187,8 @@ body.color .frame video, body.color .frame img,
 
     <article class="work" data-id="seedance">
       <a class="frame" href="#seedance" aria-label="Смотреть Maison Rouge">
-        <video src="media/seedance-loop.mp4" poster="media/seedance.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-neg" src="media/seedance-loop-neg.mp4" poster="media/seedance-neg.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-col" src="media/seedance-loop.mp4" poster="media/seedance.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video>
         <span class="play">▶ Смотреть</span>
       </a>
       <div class="cap"><div><h2>Maison Rouge</h2><p>Ресторан · промо</p></div><span class="meta">9:16 · 0:30</span></div>
@@ -192,7 +196,8 @@ body.color .frame video, body.color .frame img,
 
     <article class="work" data-id="padelgrad">
       <a class="frame" href="#padelgrad" aria-label="Смотреть Padelgrad">
-        <video src="media/padelgrad-loop.mp4" poster="media/padelgrad.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-neg" src="media/padelgrad-loop-neg.mp4" poster="media/padelgrad-neg.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-col" src="media/padelgrad-loop.mp4" poster="media/padelgrad.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video>
         <span class="play">▶ Смотреть</span>
       </a>
       <div class="cap"><div><h2>Padelgrad</h2><p>Падел-клуб · промо</p></div><span class="meta">9:16 · 0:22</span></div>
@@ -200,7 +205,8 @@ body.color .frame video, body.color .frame img,
 
     <article class="work" data-id="babuli">
       <a class="frame" href="#babuli" aria-label="Смотреть Fast Food Mob">
-        <video src="media/babuli-loop.mp4" poster="media/babuli.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-neg" src="media/babuli-loop-neg.mp4" poster="media/babuli-neg.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-col" src="media/babuli-loop.mp4" poster="media/babuli.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video>
         <span class="play">▶ Смотреть</span>
       </a>
       <div class="cap"><div><h2>Fast Food Mob</h2><p>Бабули · авторский ролик</p></div><span class="meta">9:16 · 0:21</span></div>
@@ -208,7 +214,8 @@ body.color .frame video, body.color .frame img,
 
     <article class="work" data-id="dom">
       <a class="frame" href="#dom" aria-label="Смотреть ролик жилого комплекса">
-        <video src="media/dom-loop.mp4" poster="media/dom.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-neg" src="media/dom-loop-neg.mp4" poster="media/dom-neg.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-col" src="media/dom-loop.mp4" poster="media/dom.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video>
         <span class="play">▶ Смотреть</span>
       </a>
       <div class="cap"><div><h2>Жилой комплекс</h2><p>Девелопер · архитектурный ролик</p></div><span class="meta">9:16 · 0:08</span></div>
@@ -216,7 +223,8 @@ body.color .frame video, body.color .frame img,
 
     <article class="work" data-id="ugc">
       <a class="frame" href="#ugc" aria-label="Смотреть UGC">
-        <video src="media/ugc-loop.mp4" poster="media/ugc.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-neg" src="media/ugc-loop-neg.mp4" poster="media/ugc-neg.jpg" muted loop playsinline preload="metadata"></video>
+        <video class="v-col" src="media/ugc-loop.mp4" poster="media/ugc.jpg" muted loop playsinline preload="metadata" aria-hidden="true"></video>
         <span class="play">▶ Смотреть</span>
       </a>
       <div class="cap"><div><h2>UGC</h2><p>AI-блогер · бьюти</p></div><span class="meta">9:16 · 0:12</span></div>
@@ -229,8 +237,8 @@ body.color .frame video, body.color .frame img,
     <span class="track" aria-hidden="true"></span><span class="lbl">Цвет</span>
   </button>
   <nav class="links" aria-label="Контакты">
-    <a href="https://t.me/" target="_blank" rel="noopener" data-contact="telegram">Telegram</a>
-    <a href="https://instagram.com/" target="_blank" rel="noopener" data-contact="instagram">Instagram</a>
+    <a href="https://t.me/mandrika_p" target="_blank" rel="noopener" data-contact="telegram">Telegram</a>
+    <a href="https://www.instagram.com/mandrika_ai/" target="_blank" rel="noopener" data-contact="instagram">Instagram</a>
     <button class="mail" id="mail" type="button" data-mail="proxorahah@gmail.com">Почта</button>
   </nav>
 </footer>
@@ -251,8 +259,12 @@ body.color .frame video, body.color .frame img,
 <script>
 (() => {
   const works = [...document.querySelectorAll('.work')];
-  const vids = works.map(w => w.querySelector('.frame video'));
+  const vids = [...document.querySelectorAll('.frame video')];
   const touch = matchMedia('(hover: none)').matches;
+  const sync = w => {
+    const n = w.querySelector('.v-neg'), c = w.querySelector('.v-col');
+    if (n && c && Math.abs(c.currentTime - n.currentTime) > 0.15) { try { c.currentTime = n.currentTime; } catch (e) {} }
+  };
 
   // превью играют только в зоне видимости
   const playIO = new IntersectionObserver(es => es.forEach(e => {
@@ -261,17 +273,39 @@ body.color .frame video, body.color .frame img,
   }), { rootMargin: '200px 0px' });
   vids.forEach(v => playIO.observe(v));
 
-  // на телефоне в цвет проявляется ролик в центре экрана
+  // на компьютере цвет проявляется при наведении
+  works.forEach(w => w.querySelector('.frame').addEventListener('mouseenter', () => sync(w)));
+
+  // на телефоне в цвет проявляется работа, ближайшая к центру экрана (в двух колонках — весь ряд)
   if (touch) {
-    const liveIO = new IntersectionObserver(es => es.forEach(e =>
-      e.target.closest('.work').classList.toggle('live', e.isIntersecting)
-    ), { rootMargin: '-38% 0px -38% 0px' });
-    vids.forEach(v => liveIO.observe(v));
+    let ticking = false;
+    const pick = () => {
+      ticking = false;
+      // в самом верху страницы проявляется первая работа, дальше — та, что ближе к линии чуть выше центра
+      const mid = scrollY < 60 ? 0 : innerHeight * 0.45;
+      let best = null, bestD = Infinity;
+      works.forEach(w => {
+        const r = w.querySelector('.frame').getBoundingClientRect();
+        if (r.bottom < 0 || r.top > innerHeight) return;
+        const d = Math.abs((r.top + r.bottom) / 2 - mid);
+        if (d < bestD - 1) { best = [w]; bestD = d; } else if (Math.abs(d - bestD) <= 1 && best) best.push(w);
+      });
+      works.forEach(w => {
+        const on = !!best && best.includes(w);
+        if (on && !w.classList.contains('live')) sync(w);
+        w.classList.toggle('live', on);
+      });
+    };
+    const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(pick); } };
+    addEventListener('scroll', req, { passive: true });
+    addEventListener('resize', req);
+    addEventListener('load', req);
+    pick();
   }
 
   // переключатель цвета
   const neg = document.getElementById('neg');
-  const setColor = on => { document.body.classList.toggle('color', on); neg.setAttribute('aria-pressed', on); };
+  const setColor = on => { if (on) works.forEach(sync); document.body.classList.toggle('color', on); neg.setAttribute('aria-pressed', on); };
   try { setColor(localStorage.getItem('pm-color') === '1'); } catch (e) {}
   neg.addEventListener('click', () => {
     const on = neg.getAttribute('aria-pressed') !== 'true';
